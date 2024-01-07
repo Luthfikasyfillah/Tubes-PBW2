@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\duitController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\registeredUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,38 +15,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/coba', function () {
+    return view('coba');
+});
 
-    Route::get('/users', [registeredUserController::class, 'index']);
-    Route::get('/usersRegistration', [registeredUserController::class, 'create']);
-    Route::post('/usersStore', [registeredUserController::class, 'store']);
+// AUTENTIKASI PENGGUNA
+Route::get('/signup', function () {return view('signup');});
+Route::post('/signup', [registeredUserController::class, 'store'])->name('user.register');
+Route::get('/signin', function () {return view('signin');})->name('signin');
+Route::post('/signin', [registeredUserController::class, 'login'])->name('user.login');
 
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
-Route::get('/SignUp', function () {
-    return view('SignUp');
-});
-Route::get('/sidebar', function () {
-    return view('layout/sidebar');
-});
-Route::get('/resetPassword', function () {
-    return view('resetPassword');
-});
-Route::get('/editProfil', function () {
-    return view('editProfil');
-});
-Route::get('/pengeluaran', function () {
-    return view('pengeluaran');
-});
-Route::get('/tabungan', function () {
-    return view('tabungan');
-});
-Route::get('/grafik', function () {
-    return view('grafik');
+// PENGGUNA TERAUTENTIKASI
+Route::middleware('auth')->group(function () {
+    Route::get('/{url}', [duitController::class, "index"])->where('url', '(dashboard|pemasukan|pengeluaran|tabungan|grafik)')->name('urls');
+    Route::post('/pemasukan', [duitController::class, "pemasukanStore"])->name('pemasukan.store');
+    Route::delete('/pemasukan/{id}', [duitController::class, "pemasukanDelete"])->name('pemasukan.delete');
+    Route::post('/pengeluaran', [duitController::class, "pengeluaranStore"])->name('pengeluaran.store');
+    Route::delete('/pengeluaran/{id}', [duitController::class, "pengeluaranDelete"])->name('pengeluaran.delete');
+    Route::post('/tabungan', [duitController::class, "tabunganStore"])->name('tabungan.store');
+    Route::put('/tabungan/{id}', [duitController::class, "tabunganUpdate"])->name('tabungan.update');
+    Route::delete('/tabungan/{id}', [duitController::class, "tabunganDelete"])->name('tabungan.delete');
+    Route::get('/profile', [registeredUserController::class, "profile"])->name('profile');
+    Route::put('/profile', [registeredUserController::class, "profileEdit"])->name('profile.edit');
+    Route::get('/logout', [registeredUserController::class, "logout"])->name('logout');
 });

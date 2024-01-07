@@ -20,15 +20,19 @@
                 bersama kami</div>
             <!-- Sign up  Link -->
             <div class="text-2xl text-white border-2 rounded-md pt-1 pb-2 px-6 border-white">
-                <a href="#" class="hover:underline">Sign Up</a>
+                <a href="signup" class="hover:underline">Sign Up</a>
             </div>
         </div>
         <!-- Right: Login Form -->
         <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-2/3">
             <h1 class="mb-10 text-4xl text-center text-blue-900 font-bold">Sign In</h1>
-            <form action="#" method="POST">
+            <form action="{{ route('user.login') }}" method="POST">
+                @csrf
                 <!-- Username Input -->
                 <div class="mb-4">
+                    @if (Session::get('error'))
+                        <p class="mb-2 text-red-500">{{ Session::get('error') }}</p>
+                    @endif
                     <input type="text" id="username" name="username" placeholder="Username"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
@@ -40,9 +44,9 @@
                         autocomplete="off">
                 </div>
                 <!-- Forgot Password -->
-                <div class="mb-6 text-gray-500">
+                {{-- <div class="mb-6 text-gray-500">
                     <a href="#" class="hover:underline">Lupa Password?</a>
-                </div>
+                </div> --}}
                 <!-- Login Button -->
                 <button type="submit"
                     class="bg-blue-900 hover:bg-blue-800 text-1xl text-white font-semibold rounded-md py-2 px-4 w-full">SIGN

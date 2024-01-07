@@ -28,8 +28,8 @@
 @section('content')
     <div class="flex flex-col md:flex-row items-start ml-28 mr-12">
         <div class="mb-4 lg:mb-0">
-            <div class="font-bold text-2xl">Hai, Cipung!</div>
-            <div class="font-medium text-gray-500">Bagaimana Kabarmu Hari Ini?</div>
+            <div class="font-bold text-2xl">Hai, {{ Auth::user()->name }}!</div>
+            <div class="font-medium text-gray-500">Bagaimana kabarmu hari ini?</div>
         </div>
         <div class="flex-grow"></div>
         <div class="flex p-3 gap-3 justify-center items-center bg-white bg-opacity-50 rounded-lg">
@@ -74,8 +74,8 @@
         <div class="flex flex-col lg:w-3/4">
             <div class="flex flex-col lg:flex-row gap-5 justify-left items-start w-full pb-4">
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
-                    <a href="dashboard"> <button class="font-medium text-gray-500">Pemasukan</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <a href="pemasukan"> <button class="font-medium text-gray-500">Pemasukan</button></a>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $pemasukans->sum('nominalPemasukan') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showOutcomeForm()">+
@@ -83,7 +83,7 @@
                 </div>
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
                     <a href="pengeluaran"> <button class="font-medium text-gray-500">Pengeluaran</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $pengeluarans->sum('nominalPengeluaran') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showIncomeForm()">+
@@ -91,54 +91,54 @@
                 </div>
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
                     <a href="tabungan"> <button class="font-medium text-gray-500">Tabungan</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $tabungans->sum('jumlahTabungan') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showTabunganForm()">+
                         Tambah Tabungan</button>
                 </div>
             </div>
-            <div class="p-3 bg-white bg-opacity-50 rounded-lg">
-                <div class="flex flex-col">
-                    <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 p-3">
-                        <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                            <div class="overflow-hidden">
-                                <table class="min-w-full text-left text-sm font-light">
-                                    <thead class="border-b-2 font-medium">
-                                        <tr>
-                                            <th scope="col" class="px-4 py-4">Keterangan</th>
-                                            <th scope="col" class="px-4 py-4">Tanggal</th>
-                                            <th scope="col" class="px-4 py-4">Jumlah</th>
-                                            <th scope="col" class="px-4 py-4"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="border-b-2 ">
-                                            <td class="px-4 py-4 font-normal">Makan</td>
-                                            <td class="px-4 py-4 font-normal">30 Okt 2023</td>
-                                            <td class="px-4 py-4 font-normal">Rp 5.000.000</td>
-                                            <td class="px-4 py-4">
-                                                <button class="bg-gray-300 px-2 rounded-full font-semibold text-white"
-                                                    onclick="showConfirmation()">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr class="border-b-2 ">
-                                            <td class="px-4 py-4 font-normal">Makan</td>
-                                            <td class="px-4 py-4 font-normal">30 Okt 2023</td>
-                                            <td class="px-4 py-4 font-normal">Rp 5.000.000</td>
-                                            <td class="px-4 py-4">
-                                                <button class="bg-gray-300 px-2 rounded-full font-semibold text-white"
-                                                    onclick="showConfirmation()">Delete</button>
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
+            @if (!$pengeluarans->count())
+                <h1 class="text-2xl text-slate-800 font-bold ms-4 mt-5">Tidak ada riwayat pengeluaran</h1>
+            @else
+                <div class="p-3 bg-white bg-opacity-50 rounded-lg">
+                    <div class="flex flex-col">
+                        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 p-3">
+                            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                                <div class="overflow-hidden">
+                                    <table class="min-w-full text-left text-sm font-light">
+                                        <thead class="border-b-2 font-medium">
+                                            <tr>
+                                                <th scope="col" class="px-4 py-4">Keterangan</th>
+                                                <th scope="col" class="px-4 py-4">Tanggal</th>
+                                                <th scope="col" class="px-4 py-4">Jumlah</th>
+                                                <th scope="col" class="px-4 py-4"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pengeluarans as $pengeluaran)
+                                                <tr class="border-b-2 ">
+                                                    <td class="px-4 py-4 font-normal">{{ $pengeluaran->keterangan }}</td>
+                                                    <td class="px-4 py-4 font-normal">
+                                                        {{ Carbon\Carbon::parse($pengeluaran->tanggal)->translatedFormat('d M Y') }}
+                                                    </td>
+                                                    <td class="px-4 py-4 font-normal">Rp
+                                                        {{ $pengeluaran->nominalPengeluaran }}</td>
+                                                    <td class="px-4 py-4">
+                                                        <button
+                                                            class="bg-gray-300 px-2 rounded-full font-semibold text-white"
+                                                            onclick="showConfirmation({{ $pengeluaran->idPengeluaran }})">Delete</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
         </div>
         <div class="p-3 bg-white bg-opacity-50 rounded-lg lg:w-1/4">
             <h1 class="font-bold text-center">Riwayat</h1>
@@ -191,14 +191,24 @@
     <div class="overlay" id="confirmationOverlay">
         <div class="confirmation-box px-12">
             <p class="mb-4 font-semibold">Anda yakin akan menghapus data ini?</p>
-            <button class="bg-blue-800 text-white px-6 py-1 mr-2 rounded" onclick="deleteItem()">Ya</button>
             <button class="bg-cyan-600 text-white px-6 py-1 rounded" onclick="hideConfirmation()">Tidak</button>
+            <form id="formHapus" action="" method="POST" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-blue-800 text-white px-6 py-1 mr-2 rounded"
+                    onclick="deleteItem()">Ya</button>
+            </form>
         </div>
     </div>
 
     <script>
-        function showConfirmation() {
+        function showConfirmation(id) {
             // Menampilkan overlay dan kotak konfirmasi
+            console.log(id);
+            const form = document.getElementById('formHapus') || null;
+            if (form) {
+                form.action = "pengeluaran/" + id;
+            }
             document.getElementById('confirmationOverlay').style.display = 'flex';
         }
 
@@ -221,11 +231,10 @@
             <form>
                 <div class="mb-4">
                     <label for="tanggal" class="block font-semibold text-sm pb-1">Tanggal</label>
-                    <input type="date" id="tanggal" name="tanggal"
-                        class="border bg-gray-200 px-2 py-1 rounded w-full">
+                    <input type="date" id="tanggal" name="tanggal" class="border bg-gray-200 px-2 py-1 rounded w-full">
                 </div>
                 <div class="mb-4">
-                    <label for="jumlah" class="block font-semibold text-sm pb-1">Jumlah</label>
+                    <label for="jumlah" class="block font-semibold text-sm pB-1">Jumlah</label>
                     <input type="text" id="jumlah" name="jumlah" class="border bg-gray-200 px-2 py-1 rounded ">
                 </div>
                 <div class="mb-4">

@@ -28,8 +28,8 @@
 @section('content')
     <div class="flex flex-col md:flex-row items-start ml-28 mr-12">
         <div class="mb-4 lg:mb-0">
-            <div class="font-bold text-2xl">Hai, Cipung!</div>
-            <div class="font-medium text-gray-500">Bagaimana Kabarmu Hari Ini?</div>
+            <div class="font-bold text-2xl">Hai, {{ Auth::user()->name }}!</div>
+            <div class="font-medium text-gray-500">Bagaimana kabarmu hari ini?</div>
         </div>
         <div class="flex-grow"></div>
         <div class="flex p-3 gap-3 justify-center items-center bg-white bg-opacity-50 rounded-lg">
@@ -73,8 +73,8 @@
         <div class="flex flex-col lg:w-3/4">
             <div class="flex flex-col lg:flex-row gap-5 justify-left items-start w-full pb-4">
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
-                    <a href="dashboard"> <button class="font-medium text-gray-500">Pemasukan</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <a href="pemasukan"> <button class="font-medium text-gray-500">Pemasukan</button></a>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $pemasukans->sum('nominalPemasukan') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showOutcomeForm()">+
@@ -82,7 +82,7 @@
                 </div>
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
                     <a href="pengeluaran"> <button class="font-medium text-gray-500">Pengeluaran</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $pengeluarans->sum('nominalPengeluaran') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showIncomeForm()">+
@@ -90,7 +90,7 @@
                 </div>
                 <div class="p-3 bg-white bg-opacity-40 w-full lg:w-1/3 rounded-lg">
                     <a href="tabungan"> <button class="font-medium text-gray-500">Tabungan</button></a>
-                    <h1 class="font-bold text-2xl pb-1">Rp 10.000.000</h1>
+                    <h1 class="font-bold text-2xl pb-1 formatUang">{{ $tabungans->sum('jumlahTabungan') }}</h1>
                     <button
                         class="text-gray-500 text-sm text-center align-middle bg-white border-2 border-gray-300 rounded-full px-2"
                         onclick="showTabunganForm()">+
@@ -99,57 +99,62 @@
             </div>
             <div>
                 <div class="pb-4">
-                    <div class="p-3 bg-white bg-opacity-40 rounded-t-lg">
-                        <div class="flex flex-col">
-                            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 py-4 px-6">
-                                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                                    <div class="flex w-full justify-between overflow-hidden">
-                                        <div class="flex flex-col">
-                                            <h1 class="text-sm font-medium text-gray-400">Laptop</h1>
-                                            <h1 class="text-2xl font-bold"> Rp 20.000.000</h1>
-                                        </div>
-                                        <div class="p-3">
-                                            <img src="img/10persen.svg">
-                                        </div>
-                                        <div class="flex flex-col font-bold p-3 border-dashed border-l-4 border-gray-300">
-                                            <h1 class="pl-4">Date Created</h1>
-                                            <h1 class="pl-4">Estimation</h1>
-                                        </div>
-                                        <div class="flex flex-col p-3">
-                                            <h1> 30 Oktober 2023</h1>
-                                            <h1> 9 Bulan lagi</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-white rounded-b-lg">
-                        <div class="flex flex-col">
-                            <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 py-4 px-20">
-                                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                                    <div class="flex w-full justify-between text-center overflow-hidden">
-                                        <div class="flex flex-col">
-                                            <h1 class="text-sm font-medium">Total Tabungan</h1>
-                                            <h1 class="text-2xl font-bold text-green-500"> Rp 20.000.000</h1>
-                                        </div>
-                                        <div class="flex flex-col">
-                                            <h1 class="text-sm font-medium">Sisa</h1>
-                                            <h1 class="text-2xl font-bold text-red-500"> Rp 20.000.000</h1>
-                                        </div>
-                                        <div class="flex">
-                                            <button id="tambahButton" class="p-5">
-                                                <img src="img/tambaht.svg" alt="logo">
-                                            </button>
-                                            <a href="#" class="flex items-center">
-                                                <img src="img/hapust.svg" alt="logo" class="p-5">
-                                            </a>
+                    @if (!$tabungans->count())
+                        <h1 class="text-2xl text-slate-800 font-bold ms-4 mt-5">Belum ada tabungan dibuat</h1>
+                    @else
+                        <div class="p-3 bg-white bg-opacity-50 rounded-t-lg">
+                            <div class="flex flex-col">
+                                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 py-4 px-6">
+                                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                                        <div class="flex w-full justify-between overflow-hidden">
+                                            <div class="flex flex-col">
+                                                <h1 class="text-sm font-medium text-gray-400">Laptop</h1>
+                                                <h1 class="text-2xl font-bold"> Rp 20.000.000</h1>
+                                            </div>
+                                            <div class="p-3">
+                                                <img src="img/10persen.svg">
+                                            </div>
+                                            <div
+                                                class="flex flex-col font-bold p-3 border-dashed border-l-4 border-gray-300">
+                                                <h1 class="pl-4">Date Created</h1>
+                                                <h1 class="pl-4">Estimation</h1>
+                                            </div>
+                                            <div class="flex flex-col p-3">
+                                                <h1> 30 Oktober 2023</h1>
+                                                <h1> 9 Bulan lagi</h1>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="p-3 bg-white rounded-b-lg">
+                            <div class="flex flex-col">
+                                <div class="overflow-x-auto sm:-mx-6 lg:-mx-8 py-4 px-20">
+                                    <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                                        <div class="flex w-full justify-between text-center overflow-hidden">
+                                            <div class="flex flex-col">
+                                                <h1 class="text-sm font-medium">Total Tabungan</h1>
+                                                <h1 class="text-2xl font-bold text-green-500"> Rp 20.000.000</h1>
+                                            </div>
+                                            <div class="flex flex-col">
+                                                <h1 class="text-sm font-medium">Sisa</h1>
+                                                <h1 class="text-2xl font-bold text-red-500"> Rp 20.000.000</h1>
+                                            </div>
+                                            <div class="flex">
+                                                <button id="tambahButton" class="p-5">
+                                                    <img src="img/tambaht.svg" alt="logo">
+                                                </button>
+                                                <a href="#" class="flex items-center">
+                                                    <img src="img/hapust.svg" alt="logo" class="p-5">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

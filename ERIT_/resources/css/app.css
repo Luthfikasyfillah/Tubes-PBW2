@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap'); */
+
+* {
+  font-family: sans-serif;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  /* background: 
+    radial-gradient(closest-side, white 79%, transparent 80% 100%),
+    conic-gradient(#10b981 75%, #b3e6d5 0);     */
+}
+
+.circle-chart {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: conic-gradient(#00B4FF 0% '+persenMakan+',#0078FF '+persenMakan+' '+persenTagihan+',#FF004B '+persenTagihan+' '+persenTransportasi+',#FFAF00 '+persenTransportasi+' '+persenHiburan+',#FFE100 '+persenHiburan+' 100%);
+}

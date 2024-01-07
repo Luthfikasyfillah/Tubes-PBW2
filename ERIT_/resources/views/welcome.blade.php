@@ -64,9 +64,11 @@
                             });
                         });
                     </script>
-                    <a href="#"
-                        class="hover:border-gray-200 hover:rounded-md text-white hover:bg-sky-400 hover:text-white-grey-400 rounded-md px-3 py-2 text-sm font-medium transition duration-300 ease-in-out">Sign
-                        Up</a>
+                    @auth
+                    <a href="/logout" class="hover:border-gray-200 hover:rounded-md text-white hover:bg-sky-400 hover:text-white-grey-400 rounded-md px-3 py-2 text-sm font-medium transition duration-300 ease-in-out">Log Out</a>    
+                    @else
+                    <a href="/signup" class="hover:border-gray-200 hover:rounded-md text-white hover:bg-sky-400 hover:text-white-grey-400 rounded-md px-3 py-2 text-sm font-medium transition duration-300 ease-in-out">Sign Up</a>
+                    @endauth
                 </div>
             </div>
             <!-- Menu untuk mobile -->
@@ -152,7 +154,7 @@
                     Jadikan keuangan Anda lebih rapi, jelas, terpantau, dan capai tujuan Anda dengan E-RIT
                 </p>
                 <div>
-                    <a href="{{ url('pemasukan') }}"
+                    <a href="{{ url('dashboard') }}"
                         class="hover:shadow-outline-glow hover:opacity-80 active:shadow-outline-glow relative 
                         inline-block w-full sm:w-44 px-8 py-2 sm:py-4 mx-auto text-center font-bold text-white 
                         bg-cyan-400 border-t border-gray-200 rounded-md shadow-xl mt-0 sm:mt-1">Mulai</a>
@@ -209,53 +211,55 @@
                 </div>
             </div>
         </div>
-    </body>
 
-@section('footer')
-    <footer id="footer" class="pt-20">
-        <div class="flex mx-auto bg-blue-800 px-4 pt-12 pb-8 text-white">
-            <div class="container grid grid-cols-3 gap-4 max-w-6xl px-4 mx-auto overflow-hidden lg:flex-row">
-                <div class="col-span-1">
-                    <div class="inline-block">
-                        <a href="/">
-                            <img src="Logo/LogoERIT.svg" alt="E-RIT">
-                        </a>
+    @section('footer')
+        <footer id="footer" class="pt-20">
+            <div class="flex mx-auto bg-blue-800 px-4 pt-12 pb-8 text-white">
+                <div class="container grid grid-cols-3 gap-4 max-w-6xl px-4 mx-auto overflow-hidden lg:flex-row">
+                    <div class="col-span-1">
+                        <div class="inline-block">
+                            <a href="/">
+                                <img src="Logo/LogoERIT.svg" alt="E-RIT">
+                            </a>
+                        </div>
+                        <p class="mt-6 mr-4 text-white text-justify">
+                            <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Telekomunikasi.+1,+Terusan+Buahbatu+-+Bojongsoang,+Telkom+University,+Sukapura,+Kec.+Dayeuhkolot,+Kabupaten+Bandung,+Jawa+Barat+40257"
+                                target="_blank" class="hover:text-gray-500 focus:text-blue-500">
+                                Jl. Telekomunikasi. 1, Terusan Buahbatu-Bojongsoang, Telkom University, Sukapura, Kec.
+                                Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40257
+                            </a>
+                        </p>
                     </div>
-                    <p class="mt-6 mr-4 text-white text-justify">
-                        <a href="https://www.google.com/maps/search/?api=1&query=Jl.+Telekomunikasi.+1,+Terusan+Buahbatu+-+Bojongsoang,+Telkom+University,+Sukapura,+Kec.+Dayeuhkolot,+Kabupaten+Bandung,+Jawa+Barat+40257"
-                            target="_blank" class="hover:text-gray-500 focus:text-blue-500">
-                            Jl. Telekomunikasi. 1, Terusan Buahbatu-Bojongsoang, Telkom University, Sukapura, Kec.
-                            Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40257
-                        </a>
-                    </p>
-                </div>
-                <div class="col-span-1 ">
-                    <h2 class="text-xl font-bold text-white mb-4 pt-4 text-center">Tentang Kami</h2>
-                    <p class="pt-5 text-white text-justify ">E-RIT (Elektronik Rekap Duit),
-                        Kami menghadirkan platform
-                        pengelolaan keuangan yang dirancang khusus untuk membantu masyarakat mengelola keuangan pribadinya
-                        dengan lebih efisien dan efektif. Aplikasi ini menyediakan berbagai fitur yang memungkinkan pengguna
-                        merencanakan, memantau, dan mengontrol keuangannya dengan lebih baik.</p>
-                </div>
+                    <div class="col-span-1 ">
+                        <h2 class="text-xl font-bold text-white mb-4 pt-4 text-center">Tentang Kami</h2>
+                        <p class="pt-5 text-white text-justify ">E-RIT (Elektronik Rekap Duit),
+                            Kami menghadirkan platform
+                            pengelolaan keuangan yang dirancang khusus untuk membantu masyarakat mengelola keuangan
+                            pribadinya
+                            dengan lebih efisien dan efektif. Aplikasi ini menyediakan berbagai fitur yang memungkinkan
+                            pengguna
+                            merencanakan, memantau, dan mengontrol keuangannya dengan lebih baik.</p>
+                    </div>
 
-                <div class="col-span-1 text-right">
-                    <div class="inline-block font-bold text-white text-xl mb-4 pt-4 ">Ikuti Kami</div>
-                    <div
-                        class="flex flex-col sm:flex-row justify-end items-end sm:items-center pt-5 space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
-                                src="Logo/instagram.svg" alt="Instagram"></a>
-                        <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
-                                src="Logo/twitter.svg" alt="Twitter"></a>
-                        <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
-                                src="Logo/fb.svg" alt="Facebook"></a>
-                        <a href="#" class="flex items-center transform hover:scale-110"><img class="h-9 w-auto"
-                                src="Logo/mail.svg" alt="Email"></a>
+                    <div class="col-span-1 text-right">
+                        <div class="inline-block font-bold text-white text-xl mb-4 pt-4 ">Ikuti Kami</div>
+                        <div
+                            class="flex flex-col sm:flex-row justify-end items-end sm:items-center pt-5 space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
+                                    src="Logo/instagram.svg" alt="Instagram"></a>
+                            <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
+                                    src="Logo/twitter.svg" alt="Twitter"></a>
+                            <a href="#" class="flex items-center transform hover:scale-110"><img class="h-8 w-auto"
+                                    src="Logo/fb.svg" alt="Facebook"></a>
+                            <a href="#" class="flex items-center transform hover:scale-110"><img class="h-9 w-auto"
+                                    src="Logo/mail.svg" alt="Email"></a>
+                        </div>
                     </div>
                 </div>
             </div>
+        </footer>
+        <div class=" pt-8 pb-8  text-center text-black dark:text-white ">© 2023 E-RIT | E-RIT adalah merek dari Bumandhala
         </div>
-    </footer>
-    <div class=" pt-8 pb-8  text-center text-black dark:text-white ">© 2023 E-RIT | E-RIT adalah merek dari Bumandhala
-    </div>
+    </body>
 
     </html>

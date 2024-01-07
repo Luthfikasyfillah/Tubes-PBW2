@@ -20,40 +20,56 @@
                 informasi pribadi Anda</div>
             <!-- Sign up  Link -->
             <div class="text-2xl text-white border-2 rounded-md pt-1 pb-2 px-6 border-white">
-                <a href="#" class="hover:underline">Sign In</a>
+                <a href="signin" class="hover:underline">Sign In</a>
             </div>
         </div>
         <!-- Right: Login Form -->
         <div class="lg:p-24 md:p-36 p-8 w-full lg:w-2/3 h-screen">
             <h1 class="mb-10 text-4xl text-center text-blue-900 font-bold">Create Account</h1>
-            <form action="#" method="POST">
+            <form action="{{ route('user.register') }}" method="POST">
+                @csrf
                 <!-- Name Input -->
                 <div class="mb-4">
-                    <input type="text" id="Name" name="Name" placeholder="Nama"
+                    @error('name')
+                        Erorr bro
+                    @enderror
+                    <input type="text" id="name" name="name" placeholder="Nama"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
                 <!-- Username Input -->
                 <div class="mb-4">
+                    @error('username')
+                        Erorr bro
+                    @enderror
                     <input type="text" id="username" name="username" placeholder="Username"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
-                <!-- Username Input -->
+                <!-- Email Input -->
                 <div class="mb-4">
+                    @error('email')
+                        Erorr bro
+                    @enderror
                     <input type="email" id="email" name="email" placeholder="Email"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
                 <!-- Password Input -->
                 <div class="mb-4">
+                    @error('password')
+                        Erorr bro
+                    @enderror
                     <input type="password" id="password" name="password" placeholder="Password"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
                 <!-- Confirm Password Input -->
                 <div class="mb-4">
-                    <input type="password" id="cPassword" name="cpassword" placeholder="Konfirmasi password"
+                    @error('password_confirmation')
+                        Erorr bro
+                    @enderror
+                    <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Konfirmasi Password"
                         class="w-full border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
@@ -62,7 +78,6 @@
                     class="bg-blue-900 hover:bg-blue-800 text-1xl text-white font-semibold rounded-md py-2 px-4 w-full">SIGN
                     UP</button>
             </form>
-
         </div>
     </div>
 </body>

@@ -18,27 +18,38 @@
         <!-- Right: Form -->
         <div class="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-2/3">
             <h1 class="mb-8 text-4xl text-center text-blue-900 font-bold">Edit Profil</h1>
-            <form action="#" method="POST">
+            <form action="{{ route('profile.edit') }}" method="POST">
+                @csrf
+                @method('PUT')
                 <!-- Email Input -->
+                @error('name')
+                    error bro
+                @enderror
                 <div class="mb-8 flex">
                     <div><label for="email" class="font-semibold">Nama</label></div>
                     <div class="flex-grow"></div>
-                    <input type="email" id="email" name="email"
+                    <input type="text" id="name" name="name"
                         class="w-96 border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
-                        autocomplete="off">
+                        autocomplete="off" value="{{ Auth::user()->name }}">
                 </div>
                 <!-- Password Input -->
+                @error('username')
+                    error bro
+                @enderror
                 <div class="mb-8 flex">
                     <div><label for="email" class="font-semibold">Username</label></div>
                     <div class="flex-grow"></div>
-                    <input type="password" id="password" name="password"
+                    <input type="text" id="username" name="username" value="{{ Auth::user()->username }}"
                         class="w-96 border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
+                @error('email')
+                    error bro
+                @enderror
                 <div class="mb-8 flex">
                     <div><label for="email" class="font-semibold">Email</label></div>
                     <div class="flex-grow"></div>
-                    <input type="password" id="password" name="password"
+                    <input type="email" id="email" name="email" value="{{ Auth::user()->email }}"
                         class="w-96 border bg-gray-200 border-gray-200 rounded-md py-2 px-3 focus:outline-none focus:border-gray-400"
                         autocomplete="off">
                 </div>
@@ -46,8 +57,7 @@
                 <div class="flex gap-5">
                     <button type="submit"
                         class="bg-blue-900 hover:bg-blue-800 text-1xl text-white font-semibold rounded-md py-2 px-4 w-full">Simpan</button>
-                    <button type="submit"
-                        class="bg-white border-2 border-blue-800 text-1xl text-blue-800 font-semibold rounded-md py-2 px-4 w-full">Batal</button>
+                    <a href="/pemasukan" class="text-center bg-white border-2 border-blue-800 text-1xl text-blue-800 font-semibold rounded-md py-2 px-4 w-full">Batal</a>
                 </div>
             </form>
         </div>
