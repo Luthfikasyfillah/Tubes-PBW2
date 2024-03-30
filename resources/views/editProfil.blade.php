@@ -57,7 +57,7 @@
                 <div class="flex gap-5">
                     <button type="submit"
                         class="bg-blue-900 hover:bg-blue-800 text-1xl text-white font-semibold rounded-md py-2 px-4 w-full">Simpan</button>
-                    <a href="/pemasukan" class="text-center bg-white border-2 border-blue-800 text-1xl text-blue-800 font-semibold rounded-md py-2 px-4 w-full">Batal</a>
+                    <a href="/dashboard" class="text-center bg-white border-2 border-blue-800 text-1xl text-blue-800 font-semibold rounded-md py-2 px-4 w-full">Batal</a>
                 </div>
             </form>
         </div>
